@@ -1,24 +1,29 @@
-# 🤖 Chat Bot com Inteligência Artificial
+# 🤖 Leandro AI — Chat Bot com Inteligência Artificial
 
-Chatbot desenvolvido em **Python + Flask**, com interface web e integração com a API da OpenAI.
-
-A versão atual foi simplificada para funcionar primeiro como um **chatbot web local**. As integrações com Telegram, WhatsApp, voz, autenticação e MongoDB continuam no projeto como base para evoluções futuras, mas não são necessárias para testar o chat principal.
-
-## 🚀 Tecnologias
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+Aplicação web desenvolvida em **Python + Flask + SQLite + OpenAI**, com login, histórico persistente e interface inspirada em assistentes de IA modernos.
 
 ## ✅ O que funciona agora
 
-- Interface web de chat
-- Envio de mensagens pelo navegador
-- Respostas geradas pela OpenAI
-- Histórico curto de conversa por usuário
-- Modelo configurável por variável de ambiente
-- Endpoint `/health` para verificar o servidor
-- Mensagem amigável quando a chave da API não está configurada
+- Cadastro e login de usuários
+- Senhas armazenadas com hash
+- Sessões de usuário
+- Criação de múltiplas conversas
+- Histórico salvo em SQLite
+- Exclusão de conversas
+- Continuidade de contexto usando mensagens anteriores
+- Interface responsiva com barra lateral
+- Integração com a API da OpenAI
+- Endpoint `/health`
+- Banco e credenciais ignorados pelo Git
+
+## 🚀 Tecnologias
+
+- Python
+- Flask
+- SQLite
+- HTML/CSS/JavaScript
+- OpenAI API
+- Werkzeug Security
 
 ## ▶️ Como executar no Windows
 
@@ -30,62 +35,50 @@ cd Chat-Bot-IA
 cd "chat bot"
 ```
 
-### 2. Crie um ambiente virtual
+### 2. Crie e ative o ambiente virtual
 
 ```bash
 python -m venv .venv
-```
-
-Ative:
-
-```bash
 .venv\Scripts\activate
 ```
 
-### 3. Instale as dependências
+### 3. Instale as dependências principais
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure a chave da OpenAI
+### 4. Configure o ambiente
 
-Na pasta `chat bot`, copie o arquivo `.env.example` e crie um arquivo chamado `.env`.
-
-Exemplo:
+Crie um arquivo `.env` na pasta `chat bot` usando `.env.example` como modelo:
 
 ```env
 OPENAI_API_KEY=sua_chave_aqui
 OPENAI_MODEL=gpt-4o-mini
+SECRET_KEY=troque-por-uma-chave-longa-e-aleatoria
 PORT=5000
 FLASK_DEBUG=false
 ```
 
-> Nunca publique sua chave real no GitHub.
+Nunca publique sua chave real da API nem sua `SECRET_KEY`.
 
-### 5. Inicie o chatbot
+### 5. Execute
 
 ```bash
 python app.py
 ```
 
-Abra no navegador:
+Abra:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-Pronto: você já poderá conversar com o chatbot pela interface web.
+Na primeira vez, clique em **Criar conta**, faça seu cadastro e comece uma conversa.
 
-## 🩺 Teste rápido
+## 💾 Banco de dados
 
-Com o servidor ligado, acesse:
-
-```text
-http://127.0.0.1:5000/health
-```
-
-O servidor informa se está ativo e se encontrou a variável `OPENAI_API_KEY`.
+O arquivo `chatbot.db` é criado automaticamente na primeira execução. Ele armazena usuários, conversas e mensagens localmente e está incluído no `.gitignore`.
 
 ## 📂 Estrutura principal
 
@@ -93,23 +86,35 @@ O servidor informa se está ativo e se encontrou a variável `OPENAI_API_KEY`.
 chat bot/
 ├── app.py
 ├── .env.example
+├── .gitignore
 ├── requirements.txt
+├── requirements-optional.txt
 ├── core/
 │   └── chatbot.py
-├── integrations/
-├── services/
 └── templates/
+    ├── login.html
     └── chat.html
+```
+
+## 🔌 Integrações opcionais
+
+O repositório ainda contém estruturas para Telegram, WhatsApp, voz e analytics. As dependências dessas funcionalidades foram separadas para não complicar a instalação do chatbot principal.
+
+Para instalá-las futuramente:
+
+```bash
+pip install -r requirements-optional.txt
 ```
 
 ## 🔜 Próximas evoluções
 
-- Reativar WhatsApp Cloud API
-- Ajustar integração do Telegram
-- Persistir histórico no banco de dados
-- Implementar autenticação de usuários
-- Melhorar suporte a voz
-- Publicar o chatbot em um servidor na nuvem
+- Publicar em um servidor na nuvem
+- Recuperação de senha
+- Renomear conversas
+- Streaming de respostas
+- Upload de arquivos
+- Reativar WhatsApp e Telegram
+- Dashboard de uso
 
 ## 👨‍💻 Autor
 
