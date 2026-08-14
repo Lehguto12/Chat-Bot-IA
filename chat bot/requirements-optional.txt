@@ -1,0 +1,9 @@
+python-telegram-bot==20.6
+whatsapp-cloud-api==1.0.0
+pymongo==4.5.0
+python-jose==3.3.0
+SpeechRecognition==3.10.0
+pydub==0.25.1
+requests==2.31.0
+python-socketio==5.9.0
+flask-socketio==5.3.6
