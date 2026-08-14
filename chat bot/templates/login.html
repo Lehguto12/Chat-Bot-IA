@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'Criar conta' if mode == 'register' else 'Entrar' }} • Leandro AI</title>
+    <style>
+        *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#0b1020,#121a30);font-family:Inter,Arial,sans-serif;color:#e5e7eb}.card{width:min(430px,100%);background:#111827;border:1px solid #263249;border-radius:24px;padding:32px;box-shadow:0 24px 80px rgba(0,0,0,.4)}.brand{display:flex;gap:12px;align-items:center;margin-bottom:26px}.brand-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:#2563eb;font-size:22px}.brand h1{font-size:1.25rem;margin:0}.brand p{margin:4px 0 0;color:#94a3b8;font-size:.86rem}h2{margin:0 0 8px;font-size:1.7rem}.lead{color:#94a3b8;margin:0 0 24px}.field{margin-bottom:16px}label{display:block;font-size:.86rem;font-weight:700;margin-bottom:7px}input{width:100%;padding:13px 14px;border:1px solid #334155;border-radius:12px;background:#0f172a;color:#fff;outline:none}input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}button{width:100%;padding:13px;border:0;border-radius:12px;background:#2563eb;color:#fff;font-weight:800;cursor:pointer;margin-top:4px}.error{background:#3f151c;border:1px solid #7f1d1d;color:#fecaca;padding:11px 13px;border-radius:10px;margin-bottom:16px;font-size:.9rem}.switch{text-align:center;color:#94a3b8;margin:20px 0 0;font-size:.9rem}.switch a{color:#60a5fa;text-decoration:none;font-weight:700}.note{font-size:.78rem;color:#64748b;text-align:center;margin-top:18px}
+    </style>
+</head>
+<body>
+    <main class="card">
+        <div class="brand"><div class="brand-icon">✦</div><div><h1>Leandro AI</h1><p>Seu assistente pessoal com IA</p></div></div>
+        <h2>{{ 'Crie sua conta' if mode == 'register' else 'Bem-vindo de volta' }}</h2>
+        <p class="lead">{{ 'Comece a salvar suas conversas.' if mode == 'register' else 'Entre para acessar seu histórico.' }}</p>
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        <form method="post" action="{{ url_for('register') if mode == 'register' else url_for('login') }}">
+            {% if mode == 'register' %}<div class="field"><label for="name">Nome</label><input id="name" name="name" required minlength="2" autocomplete="name"></div>{% endif %}
+            <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" required autocomplete="email"></div>
+            <div class="field"><label for="password">Senha</label><input id="password" name="password" type="password" required minlength="6" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}"></div>
+            <button type="submit">{{ 'Criar conta' if mode == 'register' else 'Entrar' }}</button>
+        </form>
+        <p class="switch">{% if mode == 'register' %}Já tem conta? <a href="{{ url_for('login') }}">Entrar</a>{% else %}Ainda não tem conta? <a href="{{ url_for('register') }}">Criar conta</a>{% endif %}</p>
+        <p class="note">Projeto de portfólio • Python + Flask + SQLite + OpenAI</p>
+    </main>
+</body>
+</html>
