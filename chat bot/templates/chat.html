@@ -3,156 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Bot IA</title>
+    <title>Leandro AI</title>
     <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: Inter, Arial, sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 24px;
-        }
-        .app {
-            width: min(900px, 100%);
-            height: min(760px, 90vh);
-            background: #111827;
-            border: 1px solid #243244;
-            border-radius: 24px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 24px 80px rgba(0,0,0,.35);
-        }
-        header {
-            padding: 22px 24px;
-            border-bottom: 1px solid #243244;
-        }
-        header h1 { margin: 0 0 6px; font-size: 1.35rem; }
-        header p { margin: 0; color: #94a3b8; font-size: .92rem; }
-        #messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .message {
-            max-width: 78%;
-            padding: 12px 15px;
-            border-radius: 16px;
-            line-height: 1.5;
-            white-space: pre-wrap;
-        }
-        .user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 5px; }
-        .bot { align-self: flex-start; background: #1e293b; border-bottom-left-radius: 5px; }
-        .composer {
-            padding: 18px;
-            border-top: 1px solid #243244;
-            display: flex;
-            gap: 10px;
-            background: #0f172a;
-        }
-        input {
-            flex: 1;
-            padding: 14px 16px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            background: #111827;
-            color: #e2e8f0;
-            outline: none;
-        }
-        input:focus { border-color: #3b82f6; }
-        button {
-            border: 0;
-            border-radius: 12px;
-            padding: 0 20px;
-            font-weight: 700;
-            cursor: pointer;
-            background: #2563eb;
-            color: white;
-        }
-        button:disabled { opacity: .55; cursor: wait; }
-        .status { font-size: .8rem; color: #64748b; padding: 0 20px 14px; background: #0f172a; }
-        @media (max-width: 640px) {
-            body { padding: 0; }
-            .app { height: 100vh; border-radius: 0; }
-            .message { max-width: 88%; }
-        }
+        :root{--bg:#0b1020;--panel:#111827;--panel2:#0f172a;--line:#263249;--muted:#94a3b8;--text:#e5e7eb;--blue:#2563eb;--blue2:#3b82f6}*{box-sizing:border-box}body{margin:0;height:100vh;overflow:hidden;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--text)}button,input{font:inherit}.shell{height:100vh;display:grid;grid-template-columns:290px 1fr}.sidebar{background:#0a0f1d;border-right:1px solid var(--line);padding:16px;display:flex;flex-direction:column;min-width:0}.brand{display:flex;align-items:center;gap:10px;padding:6px 6px 18px}.brand-icon{width:36px;height:36px;border-radius:12px;background:var(--blue);display:grid;place-items:center}.brand strong{display:block}.brand span{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}.new-chat{border:1px solid #334155;background:#151e2f;color:#fff;border-radius:12px;padding:11px 13px;font-weight:750;cursor:pointer;text-align:left;margin-bottom:14px}.new-chat:hover{border-color:var(--blue2)}.history{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:5px}.history-item{display:flex;align-items:center;gap:8px;border-radius:10px;padding:9px 10px;color:#cbd5e1;cursor:pointer;font-size:.88rem}.history-item:hover,.history-item.active{background:#172033;color:#fff}.history-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.delete-chat{opacity:0;border:0;background:transparent;color:#94a3b8;padding:2px 4px;cursor:pointer}.history-item:hover .delete-chat{opacity:1}.account{border-top:1px solid var(--line);padding:14px 6px 0;display:flex;align-items:center;gap:10px}.avatar{width:34px;height:34px;border-radius:50%;background:#334155;display:grid;place-items:center;font-weight:800}.account-info{min-width:0;flex:1}.account-info strong{font-size:.88rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.account-info span{font-size:.75rem;color:var(--muted)}.logout{background:transparent;border:0;color:#94a3b8;cursor:pointer;font-size:1rem}.main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#0d1424,#0b1020)}.topbar{height:62px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(15,23,42,.76);backdrop-filter:blur(10px)}.topbar strong{font-size:.95rem}.status{font-size:.76rem;color:#86efac}.messages{flex:1;overflow-y:auto;padding:34px max(20px,calc((100% - 850px)/2));display:flex;flex-direction:column;gap:22px}.welcome{margin:auto;text-align:center;max-width:620px}.welcome-logo{width:58px;height:58px;border-radius:18px;background:var(--blue);display:grid;place-items:center;margin:0 auto 18px;font-size:27px}.welcome h1{font-size:2rem;margin:0 0 10px}.welcome p{color:var(--muted);line-height:1.6}.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:25px}.suggestion{border:1px solid var(--line);border-radius:14px;background:#111827;padding:13px;text-align:left;color:#cbd5e1;cursor:pointer}.suggestion:hover{border-color:#475569;background:#151e2f}.message{display:flex;gap:13px;line-height:1.62}.message .icon{width:32px;height:32px;flex:0 0 32px;border-radius:10px;display:grid;place-items:center;font-weight:800}.message.user .icon{background:#334155}.message.bot .icon{background:var(--blue)}.bubble{padding-top:4px;white-space:pre-wrap;word-break:break-word;max-width:100%}.composer-wrap{padding:12px max(20px,calc((100% - 850px)/2)) 24px;background:linear-gradient(transparent,#0b1020 24%)}.composer{display:flex;align-items:flex-end;gap:10px;padding:10px;border:1px solid #334155;background:#111827;border-radius:18px;box-shadow:0 12px 35px rgba(0,0,0,.22)}textarea{flex:1;resize:none;max-height:160px;min-height:24px;border:0;outline:none;background:transparent;color:#fff;padding:7px 8px;line-height:1.5}.send{width:39px;height:39px;border:0;border-radius:12px;background:var(--blue);color:#fff;cursor:pointer;font-size:18px}.send:disabled{opacity:.45;cursor:wait}.hint{text-align:center;color:#64748b;font-size:.72rem;margin-top:8px}.mobile-menu{display:none;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}@media(max-width:760px){.shell{grid-template-columns:1fr}.sidebar{position:fixed;z-index:20;inset:0 auto 0 0;width:290px;transform:translateX(-100%);transition:.2s}.sidebar.open{transform:translateX(0);box-shadow:20px 0 60px rgba(0,0,0,.4)}.mobile-menu{display:block}.suggestions{grid-template-columns:1fr}.messages{padding-top:24px}.topbar{padding:0 14px}}
     </style>
 </head>
 <body>
-    <main class="app">
-        <header>
-            <h1>🤖 Chat Bot IA</h1>
-            <p>Projeto de Leandro Augusto • Python + Flask + OpenAI</p>
-        </header>
+<div class="shell">
+    <aside id="sidebar" class="sidebar">
+        <div class="brand"><div class="brand-icon">✦</div><div><strong>Leandro AI</strong><span>Assistente inteligente</span></div></div>
+        <button id="new-chat" class="new-chat">＋ Nova conversa</button>
+        <div id="history" class="history"></div>
+        <div class="account"><div class="avatar">{{ user_name[0]|upper }}</div><div class="account-info"><strong>{{ user_name }}</strong><span>Conta local</span></div><form method="post" action="{{ url_for('logout') }}"><button class="logout" title="Sair">↪</button></form></div>
+    </aside>
 
-        <section id="messages">
-            <div class="message bot">Olá! Estou pronto para conversar. Digite uma mensagem abaixo.</div>
-        </section>
-
-        <div class="composer">
-            <input id="message" type="text" placeholder="Digite sua mensagem..." autocomplete="off">
-            <button id="send">Enviar</button>
-        </div>
-        <div id="status" class="status">Conectado ao servidor local.</div>
+    <main class="main">
+        <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button id="mobile-menu" class="mobile-menu">☰</button><strong id="chat-title">Nova conversa</strong></div><span class="status">● Online</span></header>
+        <section id="messages" class="messages"></section>
+        <div class="composer-wrap"><div class="composer"><textarea id="message" rows="1" placeholder="Pergunte qualquer coisa..."></textarea><button id="send" class="send">➜</button></div><div class="hint">A IA pode cometer erros. Revise informações importantes.</div></div>
     </main>
-
-    <script>
-        const messages = document.getElementById('messages');
-        const input = document.getElementById('message');
-        const button = document.getElementById('send');
-        const status = document.getElementById('status');
-        const userId = localStorage.getItem('chat_user_id') || crypto.randomUUID();
-        localStorage.setItem('chat_user_id', userId);
-
-        function addMessage(text, type) {
-            const el = document.createElement('div');
-            el.className = `message ${type}`;
-            el.textContent = text;
-            messages.appendChild(el);
-            messages.scrollTop = messages.scrollHeight;
-        }
-
-        async function sendMessage() {
-            const message = input.value.trim();
-            if (!message || button.disabled) return;
-
-            addMessage(message, 'user');
-            input.value = '';
-            button.disabled = true;
-            status.textContent = 'A IA está respondendo...';
-
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: userId, message })
-                });
-
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Erro ao enviar mensagem.');
-                addMessage(data.response, 'bot');
-                status.textContent = 'Pronto.';
-            } catch (error) {
-                addMessage(`Erro: ${error.message}`, 'bot');
-                status.textContent = 'Ocorreu um erro.';
-            } finally {
-                button.disabled = false;
-                input.focus();
-            }
-        }
-
-        button.addEventListener('click', sendMessage);
-        input.addEventListener('keydown', event => {
-            if (event.key === 'Enter') sendMessage();
-        });
-        input.focus();
-    </script>
+</div>
+<script>
+const messages=document.getElementById('messages');const input=document.getElementById('message');const send=document.getElementById('send');const history=document.getElementById('history');const title=document.getElementById('chat-title');const sidebar=document.getElementById('sidebar');let currentConversation=null;
+function escapeHtml(text){const d=document.createElement('div');d.textContent=text;return d.innerHTML}
+function showWelcome(){messages.innerHTML=`<div class="welcome"><div class="welcome-logo">✦</div><h1>Como posso ajudar?</h1><p>Converse com sua IA, crie novas conversas e volte ao histórico quando quiser.</p><div class="suggestions"><button class="suggestion">Explique um conceito de programação de forma simples</button><button class="suggestion">Me ajude a melhorar meu currículo de tecnologia</button><button class="suggestion">Crie ideias de projetos para meu portfólio</button><button class="suggestion">Me ajude a estudar JavaScript</button></div></div>`;document.querySelectorAll('.suggestion').forEach(b=>b.onclick=()=>{input.value=b.textContent;sendMessage()})}
+function addMessage(text,role){const el=document.createElement('div');el.className=`message ${role==='user'?'user':'bot'}`;el.innerHTML=`<div class="icon">${role==='user'?'{{ user_name[0]|upper }}':'✦'}</div><div class="bubble"></div>`;el.querySelector('.bubble').textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight}
+async function api(url,options={}){const r=await fetch(url,{headers:{'Content-Type':'application/json',...(options.headers||{})},...options});const data=await r.json();if(!r.ok)throw new Error(data.error||'Erro inesperado');return data}
+async function loadConversations(){const items=await api('/api/conversations');history.innerHTML='';items.forEach(c=>{const row=document.createElement('div');row.className='history-item'+(c.id===currentConversation?' active':'');row.innerHTML=`<span>💬</span><span class="history-title"></span><button class="delete-chat" title="Excluir">×</button>`;row.querySelector('.history-title').textContent=c.title;row.onclick=()=>openConversation(c.id);row.querySelector('.delete-chat').onclick=async e=>{e.stopPropagation();await api(`/api/conversations/${c.id}`,{method:'DELETE'});if(currentConversation===c.id)newConversation();await loadConversations()};history.appendChild(row)})}
+async function openConversation(id){const c=await api(`/api/conversations/${id}`);currentConversation=id;title.textContent=c.title;messages.innerHTML='';c.messages.forEach(m=>addMessage(m.content,m.role));await loadConversations();sidebar.classList.remove('open')}
+function newConversation(){currentConversation=null;title.textContent='Nova conversa';showWelcome();loadConversations();sidebar.classList.remove('open');input.focus()}
+async function sendMessage(){const text=input.value.trim();if(!text||send.disabled)return;input.value='';input.style.height='auto';if(!currentConversation)messages.innerHTML='';addMessage(text,'user');send.disabled=true;const thinking=document.createElement('div');thinking.className='message bot';thinking.innerHTML='<div class="icon">✦</div><div class="bubble">Pensando...</div>';messages.appendChild(thinking);messages.scrollTop=messages.scrollHeight;try{const data=await api('/api/chat',{method:'POST',body:JSON.stringify({conversation_id:currentConversation,message:text})});thinking.remove();currentConversation=data.conversation_id;addMessage(data.response,'assistant');await loadConversations();const detail=await api(`/api/conversations/${currentConversation}`);title.textContent=detail.title}catch(e){thinking.remove();addMessage('Erro: '+e.message,'assistant')}finally{send.disabled=false;input.focus()}}
+send.onclick=sendMessage;input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}});input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,160)+'px'});document.getElementById('new-chat').onclick=newConversation;document.getElementById('mobile-menu').onclick=()=>sidebar.classList.toggle('open');showWelcome();loadConversations();input.focus();
+</script>
 </body>
 </html>
